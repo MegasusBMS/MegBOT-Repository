@@ -33,7 +33,6 @@ public class SkipCommand implements ICommand {
 			event.getChannel().sendMessage(dm.noPermisionMessage()).queue();
 			return;
 		}
-		
 		if (player.getPlayingTrack() == null) {
 			channel.sendMessage("Nothing to skip").queue();
 			return;

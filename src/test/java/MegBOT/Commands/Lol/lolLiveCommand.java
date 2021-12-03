@@ -24,14 +24,14 @@ public class lolLiveCommand implements ICommand{
 
 	@Override
 	public void handle(CommandContext ctx) {
-		String arg = ctx.getEvent().getMessage().getContentRaw().toLowerCase();
+		String arg = ctx.getEvent().getMessage().getContentRaw().toLowerCase().toLowerCase();
 		
 		if(arg.equalsIgnoreCase(ctx.getPrefix()+getName())||arg.equalsIgnoreCase(ctx.getPrefix()+getAliase())) {
+			arg="";
 			LolRegister lr = new LolRegister(ctx.getEvent().getMember().getIdLong());
 			if(lr.getPlatform()!=null)
-			arg+=" "+lr.getPlatform()+" "+lr.getName();
-		}
-		
+			arg+=lr.getPlatform()+" "+lr.getName();
+		}	
 		if(arg.startsWith(ctx.getPrefix()+getName()))
 			arg = arg.replace(ctx.getPrefix()+getName()+" ","");
 		else

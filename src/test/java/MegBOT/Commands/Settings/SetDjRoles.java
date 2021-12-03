@@ -22,7 +22,7 @@ public class SetDjRoles implements ICommand {
 			return;
 		}
 
-		String msg = ctx.getEvent().getMessage().getContentRaw();
+		String msg = ctx.getEvent().getMessage().getContentRaw().toLowerCase();
 		EmbedBuilder eb = EmbedBuilder();
 		
 		

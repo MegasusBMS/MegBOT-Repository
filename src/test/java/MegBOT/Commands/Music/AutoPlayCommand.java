@@ -1,13 +1,5 @@
 package MegBOT.Commands.Music;
 
-import MegBOT.Main;
-import MegBOT.CommandControlCenter.CommandContext;
-import MegBOT.CommandControlCenter.ICommand;
-import MegBOT.Utils.DjMode;
-import MegBOT.Utils.EmbedTemplate;
-import MegBOT.Utils.Music.GuildMusicManager;
-import MegBOT.Utils.Music.PlayerManager;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -20,6 +12,13 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchResult;
 
+import MegBOT.Main;
+import MegBOT.CommandControlCenter.CommandContext;
+import MegBOT.CommandControlCenter.ICommand;
+import MegBOT.Utils.DjMode;
+import MegBOT.Utils.EmbedTemplate;
+import MegBOT.Utils.Music.GuildMusicManager;
+import MegBOT.Utils.Music.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -29,15 +28,15 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 
-public class PlayCommand implements ICommand {
-
+public class AutoPlayCommand implements ICommand {
+	
 	private YouTube YouTube = null;
 	public static String input;
 	public static boolean b;
 	public boolean randomlist = false;
 	public boolean playlist = false;
-
-	private void PlayCommand(String[] args, GuildMessageReceivedEvent event, boolean bo) {
+	
+	private void AutoPlayCommand(String[] args, GuildMessageReceivedEvent event, boolean bo) {
 		TextChannel channel = event.getChannel();
 		AudioManager am = event.getGuild().getAudioManager();
 		TextChannel tc = event.getChannel();
@@ -49,7 +48,7 @@ public class PlayCommand implements ICommand {
 			if (args.length < 2) {
 				EmbedBuilder play = EmbedBuilder();
 				play.setTitle(":upside_down: Please provide some arguments");
-				play.setDescription(getName() + " [url/yt_id/title/thumbnails]");
+				play.setDescription(getName() + " [url/yt_id/title]");
 				channel.sendMessage(play.build()).queue();
 
 				return;
@@ -96,15 +95,24 @@ public class PlayCommand implements ICommand {
 		}
 		PlayerManager manager = PlayerManager.getInstance();
 		YouTube = temp;
-		if (args[1].startsWith("https://www.youtube.com/watch?v=")) {
+		if (args[1].startsWith("https://www.youtube.com/watch?v=")&&(args[1].contains("&start_radio=")||args[1].contains("&list="))) {
 			manager.loadAndPlay(event.getChannel(), args[1], b);
 			return;
 		}
 		if (args[1].startsWith("https://youtu.be/")) {
 			args[1]=args[1].replace("https://youtu.be/","");
-			manager.loadAndPlay(event.getChannel(), "https://www.youtube.com/watch?v=" + args[1], b);
+			args[1]="https://www.youtube.com/watch?v="+args[1]+"&list=RD"+args[1];
+			manager.loadAndPlay(event.getChannel(), args[1], b);
 			return;
 		}
+		
+		if (args[1].startsWith("https://www.youtube.com/watch?v=")) {
+			String s = args[1].replace("https://www.youtube.com/watch?v=","");
+			args[1]="https://www.youtube.com/watch?v="+s+"&list=RD"+s;
+			manager.loadAndPlay(event.getChannel(), args[1], b);
+			return;
+		}
+		
 		// if(args[1].startsWith("https://open.spotify.com/track/05l63xRmIhBCYmGSPFOhyE?si=")){
 		// args=Spotify.Name(args[1].substring("https://open.spotify.com/track/05l63xRmIhBCYmGSPFOhyE?si=".length())).split("
 		// ");
@@ -138,12 +146,14 @@ public class PlayCommand implements ICommand {
 
 				return;
 			}
-
 			input = ytSearched;
+			input=input.replace("https://www.youtube.com/watch?v=","");
+			input="https://www.youtube.com/watch?v="+input+"&list=RD"+input;
 		}
 		manager.loadAndPlay(event.getChannel(), input, b);
+		return;
 	}
-
+	
 	private boolean isUrl(String input) {
 		try {
 			new URL(input);
@@ -159,7 +169,7 @@ public class PlayCommand implements ICommand {
 		et.Footer().RC();
 		return et.getEmbedBuilder();
 	}
-
+	
 	@Nullable
 	private String searchYoutube(String input) {
 		try {
@@ -248,12 +258,12 @@ public class PlayCommand implements ICommand {
 
 	@Override
 	public void handle(CommandContext ctx) {
-		PlayCommand(ctx.getEvent().getMessage().getContentRaw().split(" "), ctx.getEvent(), true);
+		AutoPlayCommand(ctx.getEvent().getMessage().getContentRaw().split(" "), ctx.getEvent(), true);
 	}
 
 	@Override
 	public String getName() {
-		return "play";
+		return "autoplay";
 	}
 
 	@Override
@@ -263,7 +273,7 @@ public class PlayCommand implements ICommand {
 
 	@Override
 	public String getAliase() {
-		return "p";
+		return "autop";
 	}
 
 }

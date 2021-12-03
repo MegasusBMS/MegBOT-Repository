@@ -16,7 +16,7 @@ public class ConsoleCommandControlCenter {
 			new ConsolChampCommand(args);
 			break;
 		case "load":
-			new LoadCommand();
+			new LoadCommand(5);
 			break;
 		}
 	}

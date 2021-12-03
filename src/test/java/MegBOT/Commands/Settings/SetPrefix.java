@@ -19,7 +19,7 @@ public class SetPrefix implements ICommand{
 			return;
 		}
 		
-		String[] arg = ctx.getEvent().getMessage().getContentRaw().split(" ");
+		String[] arg = ctx.getEvent().getMessage().getContentRaw().toLowerCase().split(" ");
 		EmbedBuilder eb = EmbedBuilder();
 		
 		if(arg.length>2) {

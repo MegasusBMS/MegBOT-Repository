@@ -25,11 +25,12 @@ public class lolProfileCommand implements ICommand {
 
 	@Override
 	public void handle(CommandContext ctx) {
-		String arg = ctx.getEvent().getMessage().getContentRaw().toLowerCase();
+		String arg = ctx.getEvent().getMessage().getContentRaw().toLowerCase().toLowerCase();
 		if (arg.equalsIgnoreCase(ctx.getPrefix()+getName())||arg.equalsIgnoreCase(ctx.getPrefix()+getAliase())) {
+			arg="";
 			LolRegister lr = new LolRegister(ctx.getEvent().getMember().getIdLong());
 			if (lr.getPlatform() != null)
-				arg += " " + lr.getPlatform() + " " + lr.getName();
+				arg += lr.getPlatform() + " " + lr.getName();
 		}
 		if (arg.startsWith(ctx.getPrefix()+getName()))
 			arg = arg.replace(ctx.getPrefix()+getName() + " ", "");
@@ -99,17 +100,27 @@ public class lolProfileCommand implements ICommand {
 			}
 			eb.addField("**Mains:**", c, true);
 			Emotes emote = new Emotes();
+			
+			String eu = emote.getEmote("UNRANK");
+			try {
 			String es = emote.getEmote(solo.getTier()) + solo.getRank() + " " + solo.getLeaguePoints() + "LP";
 			String ef = emote.getEmote(flex.getTier()) + flex.getRank() + " " + flex.getLeaguePoints() + "LP";
-			String eu = emote.getEmote("UNRANK");
+
 			eb.addField("Ranks:",
 					"**Solo/Duo:** "
 							+ (rank ? es : (sd ? es : eu))
 							+ "\n" + "**FLEX:** "
 							+ (rank ? ef : (f ? es : eu)),
 					true);
-			ctx.getEvent().getChannel().sendMessage(eb.build()).queue();
-
+			}catch(NullPointerException e) {
+				eb.addField("Ranks:",
+						"**Solo/Duo:** "
+								+ (eu)
+								+ "\n" + "**FLEX:** "
+								+ (eu),
+						true);
+			}
+		ctx.getEvent().getChannel().sendMessage(eb.build()).queue();
 		} catch (RiotApiException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

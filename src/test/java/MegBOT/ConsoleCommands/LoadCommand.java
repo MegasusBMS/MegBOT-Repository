@@ -4,9 +4,27 @@ import MegBOT.Main;
 import MegBOT.LeagueOfLegends.LolRegisterload;
 import MegBOT.Utils.GuildSettingsLoader;
 import MegBOT.Utils.PrefixSettingsLoader;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class LoadCommand {
-	public LoadCommand() {
+public class LoadCommand extends ListenerAdapter{
+	@Override
+	public void onReady(ReadyEvent e){
+		LoadCommand();
+	}
+/*	@Override
+	public void onGuildLeave(GuildLeaveEvent e) {
+		LoadCommand();
+	}*/
+	
+	public LoadCommand(){
+	}
+	public LoadCommand(int i) {
+		LoadCommand();
+	}
+	
+	public void LoadCommand() {
 		
 		GuildSettingsLoader gsl = new GuildSettingsLoader();
 		Main.gs = gsl.load();

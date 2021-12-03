@@ -8,7 +8,7 @@ public class RiotConnection {
 	RiotApi riot;
 	
 	public RiotConnection() {
-		ApiConfig ac = new ApiConfig().setKey("RGAPI-654032f8-371e-488a-b6fe-5573084db9f0");
+		ApiConfig ac = new ApiConfig().setKey("RGAPI-73267e51-a098-422a-b497-72937e448650");
 		riot = new RiotApi(ac);
 	}
 	

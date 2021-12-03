@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-
 import MegBOT.Main;
 import MegBOT.Commands.HelpCommand;
 import MegBOT.Commands.Lol.LolRegisterCommand;
@@ -15,9 +13,11 @@ import MegBOT.Commands.Lol.LolUnregisterCommand;
 import MegBOT.Commands.Lol.lolLiveCommand;
 import MegBOT.Commands.Lol.lolMasteryCommand;
 import MegBOT.Commands.Lol.lolProfileCommand;
+import MegBOT.Commands.Music.AutoPlayCommand;
 import MegBOT.Commands.Music.BissCommand;
 import MegBOT.Commands.Music.DjModeCommand;
 import MegBOT.Commands.Music.JoinCommand;
+import MegBOT.Commands.Music.LeaveCommand;
 import MegBOT.Commands.Music.NowPlayCommand;
 import MegBOT.Commands.Music.PauseCommand;
 import MegBOT.Commands.Music.PlayCommand;
@@ -25,16 +25,11 @@ import MegBOT.Commands.Music.QueueCommand;
 import MegBOT.Commands.Music.RepeatCommand;
 import MegBOT.Commands.Music.RepeatQueueCommand;
 import MegBOT.Commands.Music.SkipCommand;
-import MegBOT.Commands.Music.LeaveCommand;
 import MegBOT.Commands.Other.MemeCommand;
-import MegBOT.Commands.Other.PingCommand;
+import MegBOT.Commands.Rust.RustServerSearchCommand;
 import MegBOT.Commands.Settings.SetDjRoles;
 import MegBOT.Commands.Settings.SetPrefix;
-import MegBOT.Utils.Music.GuildMusicManager;
-import MegBOT.Utils.Music.PlayerManager;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.managers.AudioManager;
 
 public class CommandManager {
     private final List<ICommand> commands = new ArrayList<>();
@@ -61,6 +56,8 @@ public class CommandManager {
         addCommand(new DjModeCommand());
         addCommand(new SetPrefix());
         addCommand(new HelpCommand());
+        addCommand(new RustServerSearchCommand());
+        addCommand(new AutoPlayCommand());
     }
 
     private void addCommand(ICommand cmd) {
@@ -79,9 +76,13 @@ public class CommandManager {
 
     @Nullable
     public ICommand getCommand(String search) {
-        String searchLower = search.toLowerCase();
+        String sl = search.toLowerCase();
+        String s[]=sl.split(" ");
         for (ICommand cmd : this.commands) {
-            if (searchLower.startsWith(cmd.getName()) || searchLower.startsWith(cmd.getAliase())) {
+        	sl=s[0];
+        	if (cmd.getName().split(" ").length==2&&s.length >1)
+        		sl+=" " + s[1];
+            if (sl.equals(cmd.getName()) || sl.equals(cmd.getAliase())) {
                 return cmd;
             }
         }

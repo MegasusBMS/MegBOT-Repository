@@ -27,6 +27,7 @@ public class DjModeCommand implements ICommand{
 		DjMode dm = new DjMode();
 		if(!dm .hasPermision(m, ctx.getGuild().getIdLong())) {
 			ctx.getEvent().getChannel().sendMessage(dm.noPermisionMessage()).queue();
+			return;
 		}
 		
 		if(!am.isConnected()){
@@ -59,7 +60,7 @@ public class DjModeCommand implements ICommand{
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "djmod";
+		return "djmode";
 	}
 
 	@Override

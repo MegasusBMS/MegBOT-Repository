@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/test/java/MegBOT/CommandControlCenter/ReactionEvent.java=UTF-8
+encoding//src/test/java/MegBOT/Commands/HelpCommand.java=UTF-8
 encoding//src/test/java/MegBOT/Commands/Music/NowPlayCommand.java=UTF-8
+encoding//src/test/java/MegBOT/Commands/Rust/RustServerSearchCommand.java=UTF-8

@@ -54,6 +54,7 @@ public class LeaveCommand implements ICommand {
 		
 		musicManager.player.stopTrack();
 		musicManager.scheduler.queueclear();
+		musicManager.player.setPaused(false);
 		am.closeAudioConnection();
 		Main.vc.remove(event.getGuild());
 		if (b) {

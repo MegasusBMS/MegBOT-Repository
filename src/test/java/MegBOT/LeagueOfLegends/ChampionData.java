@@ -35,7 +35,11 @@ public class ChampionData {
 	
 	public ChampionData (int id) {
 		ChampionsData cds=new ChampionsData(id);
+		try {
 		this.version = cds.getCd().version;
+		}catch(Exception e) {
+			this.version = "";
+		}
 		this.id = cds.getCd().getId();
 		this.key = cds.getCd().getKey();
 		this.name = cds.getCd().getName();

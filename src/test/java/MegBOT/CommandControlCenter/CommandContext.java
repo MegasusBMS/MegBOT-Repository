@@ -1,11 +1,10 @@
 package MegBOT.CommandControlCenter;
 
 
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-
 import java.util.List;
+
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CommandContext implements ICommandContext {
     private final GuildMessageReceivedEvent event;

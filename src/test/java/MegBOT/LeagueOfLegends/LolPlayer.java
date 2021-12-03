@@ -22,13 +22,14 @@ public class LolPlayer {
 	public LolPlayer(String arg,ICommand cmd, RiotApi ra) {
 		error = false;
 		String[] args = arg.split(" ");
+		
+		//System.out.println(arg);
+		
 		if(args.length<2) {
 			embedEror("Provide more arguments", cmd.getHelp());
 			return;
 		}
 		boolean ok=false;
-		
-		System.out.print(arg);
 		
 		for(int i=0;i<platforms.length;i++) {
 			if(platforms[i].equalsIgnoreCase(args[0])) {

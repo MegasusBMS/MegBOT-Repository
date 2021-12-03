@@ -72,7 +72,7 @@ public class PlayerManager {
 				channel.sendMessage(pm.build()).queue();
 				play(musicManager, firstTrack);
 				if (playlist.getTracks().size() > 0) {
-					int tc = Math.min(playlist.getTracks().size(), 50);
+					int tc = Math.min(playlist.getTracks().size(), 100);
 					for (int i = 1; i < tc; i++) {
 						play(musicManager, playlist.getTracks().get(i));
 					}
